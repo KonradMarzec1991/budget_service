@@ -1,7 +1,7 @@
 from random import choice
 
-from factory import django, RelatedFactory, declarations, fuzzy
 from django.conf import settings
+from factory import declarations, django, fuzzy
 
 from budget.models import Budget, Expense
 
@@ -25,7 +25,9 @@ class BudgetFactory(django.DjangoModelFactory):
 
 class ExpenseFactory(django.DjangoModelFactory):
     title = declarations.Sequence(lambda n: "expense-{}".format(n))
-    category = choice(["HOUSING", "FOOD", "TRANSPORTATION", "INVESTING", "HEALTHCARE", "INSURANCE"])
+    category = choice(
+        ["HOUSING", "FOOD", "TRANSPORTATION", "INVESTING", "HEALTHCARE", "INSURANCE"]
+    )
     amount = fuzzy.FuzzyDecimal(20, 300, 2)
     budget = declarations.SubFactory(BudgetFactory)
     owner = declarations.SubFactory(OwnerFactory)

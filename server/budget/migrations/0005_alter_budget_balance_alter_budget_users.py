@@ -8,18 +8,20 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('budget', '0004_budget_users'),
+        ("budget", "0004_budget_users"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='budget',
-            name='balance',
+            model_name="budget",
+            name="balance",
             field=models.DecimalField(blank=True, decimal_places=2, max_digits=10),
         ),
         migrations.AlterField(
-            model_name='budget',
-            name='users',
-            field=models.ManyToManyField(blank=True, related_name='users', to=settings.AUTH_USER_MODEL),
+            model_name="budget",
+            name="users",
+            field=models.ManyToManyField(
+                blank=True, related_name="users", to=settings.AUTH_USER_MODEL
+            ),
         ),
     ]

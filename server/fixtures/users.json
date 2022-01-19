@@ -1,0 +1,60 @@
+{
+    "users": [
+        {
+            "fields": {
+                "is_superuser": true,
+                "username": "admin",
+                "password": "admin",
+                "email": "",
+                "is_staff": true,
+                "is_active": true
+            }
+        },
+        {
+            "fields": {
+                "is_superuser": false,
+                "username": "janeDoe",
+                "password": "admin",
+                "email": "",
+                "is_staff": false,
+                "is_active": true
+            }
+        },
+        {
+            "fields": {
+                "is_superuser": false,
+                "username": "MarkSmith",
+                "password": "admin",
+                "first_name": "",
+                "last_name": "",
+                "email": "",
+                "is_staff": false,
+                "is_active": true
+            }
+        },
+        {
+            "fields": {
+                "is_superuser": false,
+                "username": "KevinMitchnik",
+                "password": "admin",
+                "first_name": "",
+                "last_name": "",
+                "email": "",
+                "is_staff": false,
+                "is_active": true
+            }
+        },
+        {
+            "fields": {
+                "is_superuser": false,
+                "username": "BernardRussel",
+                "password": "admin",
+                "first_name": "",
+                "last_name": "",
+                "email": "",
+                "is_staff": false,
+                "is_active": true
+            }
+        }
+    ]
+}

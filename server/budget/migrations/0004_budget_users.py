@@ -8,13 +8,13 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('budget', '0003_rename_user_budget_owner'),
+        ("budget", "0003_rename_user_budget_owner"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='budget',
-            name='users',
-            field=models.ManyToManyField(related_name='users', to=settings.AUTH_USER_MODEL),
+            model_name="budget",
+            name="users",
+            field=models.ManyToManyField(related_name="users", to=settings.AUTH_USER_MODEL),
         ),
     ]

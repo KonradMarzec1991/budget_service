@@ -1,0 +1,94 @@
+{
+    "expenses": [
+        {
+            "fields": {
+                "title": "Bus",
+                "category": "TRANSPORTATION",
+                "amount": "30.00",
+                "budget": "Budget_of_janeDoe",
+                "owner": "janeDoe"
+            }
+        },
+        {
+            "fields": {
+                "title": "Car",
+                "category": "TRANSPORTATION",
+                "amount": "90.00",
+                "budget": "Budget_of_KevinMitchnik",
+                "owner": "KevinMitchnik"
+            }
+        },
+        {
+            "fields": {
+                "title": "Cinema",
+                "category": "ENTERTAINMENT",
+                "amount": "50.00",
+                "budget": "Budget_of_KevinMitchnik",
+                "owner": "KevinMitchnik"
+            }
+        },
+        {
+            "fields": {
+                "title": "Life_insurance",
+                "category": "INSURANCE",
+                "amount": "100.00",
+                "budget": "Budget_of_KevinMitchnik",
+                "owner": "KevinMitchnik"
+            }
+        },
+        {
+            "fields": {
+                "title": "Fruits",
+                "category": "FOOD",
+                "amount": "10.00",
+                "budget": "Budget_of_janeDoe",
+                "owner": "janeDoe"
+            }
+        },
+        {
+            "fields": {
+                "title": "Doctor_visit",
+                "category": "HEALTHCARE",
+                "amount": "120.00",
+                "budget": "Budget_of_MarkSmith",
+                "owner": "MarkSmith"
+            }
+        },
+        {
+            "fields": {
+                "title": "Table",
+                "category": "HOUSING",
+                "amount": "30.00",
+                "budget": "Budget_of_KevinMitchnik",
+                "owner": "KevinMitchnik"
+            }
+        },
+        {
+            "fields": {
+                "title": "Chair",
+                "category": "HOUSING",
+                "amount": "60.00",
+                "budget": "Budget_of_janeDoe",
+                "owner": "janeDoe"
+            }
+        },
+        {
+            "fields": {
+                "title": "New_wardrobe",
+                "category": "HOUSING",
+                "amount": "100.00",
+                "budget": "Budget_of_KevinMitchnik",
+                "owner": "KevinMitchnik"
+            }
+        },
+        {
+            "fields": {
+                "title": "Shares",
+                "category": "INVESTING",
+                "amount": "50.00",
+                "budget": "Budget_of_janeDoe",
+                "owner": "janeDoe"
+            }
+        }
+    ]
+}

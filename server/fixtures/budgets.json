@@ -1,0 +1,25 @@
+{
+    "budgets": [
+        {
+            "fields": {
+                "title": "Budget_of_janeDoe",
+                "income": "1000.00",
+                "owner": "janeDoe"
+            }
+        },
+        {
+            "fields": {
+                "title": "Budget_of_MarkSmith",
+                "income": "2500.00",
+                "owner": "MarkSmith"
+            }
+        },
+        {
+            "fields": {
+                "title": "Budget_of_KevinMitchnik",
+                "income": "6000.00",
+                "owner": "KevinMitchnik"
+            }
+        }
+    ]
+}

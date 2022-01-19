@@ -22,7 +22,11 @@ class IsExpenseOwnerOrAllowed(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         owner = request.user
         if request.method in ("PATCH", "DELETE"):
-            return obj.owner == owner
+            return obj.owner == owner or obj.budget.owner == owner
         if request.method == "GET":
-            return obj.owner == owner or obj.budget.owner == owner or owner in list(obj.budget.users.all())
+            return (
+                obj.owner == owner
+                or obj.budget.owner == owner
+                or owner in list(obj.budget.users.all())
+            )
         return False

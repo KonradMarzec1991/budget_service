@@ -5,7 +5,6 @@ from rest_framework.reverse import reverse
 from rest_framework.test import APIClient
 from rest_framework_simplejwt.tokens import RefreshToken
 
-
 from budget.tests.factories import BudgetFactory, ExpenseFactory, OwnerFactory
 
 
@@ -30,15 +29,15 @@ def test_qs_is_filtered_with_request_user():
     ExpenseFactory(budget=budget_3, title="insurance_card", category="INSURANCE", amount=220)
 
     client = APIClient()
-    client.credentials(HTTP_AUTHORIZATION='Bearer ' + get_tokens_for_user(owner_1))
+    client.credentials(HTTP_AUTHORIZATION="Bearer " + get_tokens_for_user(owner_1))
 
-    response = client.get(reverse('budgets-list'))
+    response = client.get(reverse("budgets-list"))
 
     assert response.status_code == HTTPStatus.OK
     assert response.data["num_of_records"] == 1
 
-    client.credentials(HTTP_AUTHORIZATION='Bearer ' + get_tokens_for_user(owner_2))
-    response = client.get(reverse('budgets-list'))
+    client.credentials(HTTP_AUTHORIZATION="Bearer " + get_tokens_for_user(owner_2))
+    response = client.get(reverse("budgets-list"))
 
     assert response.status_code == HTTPStatus.OK
     assert response.data["num_of_records"] == 2
@@ -60,25 +59,28 @@ def test_admin_read_all_budgets():
     ExpenseFactory(budget=budget_3, title="insurance_card", category="INSURANCE", amount=220)
 
     client = APIClient()
-    client.credentials(HTTP_AUTHORIZATION='Bearer ' + get_tokens_for_user(owner_3))
+    client.credentials(HTTP_AUTHORIZATION="Bearer " + get_tokens_for_user(owner_3))
 
-    response = client.get(reverse('budgets-list'))
+    response = client.get(reverse("budgets-list"))
 
     assert response.status_code == HTTPStatus.OK
     assert response.data["num_of_records"] == 3
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("filter_value, number_of_records, number_of_pages", [
-    ("?q=housing", 3, 1),
-    ("?q=INSURANCE", 1, 1),
-    ("?title=OTHER", 1, 1),
-    ("", 5, 2),
-    ("?min_income=800", 4, 1),
-    ("?min_income=800&max_income=1200", 2, 1),
-    ("?p=2&category=housing", 1, 2),
-    ("?p=2&category=food", 1, 2)
-])
+@pytest.mark.parametrize(
+    "filter_value, number_of_records, number_of_pages",
+    [
+        ("?q=housing", 3, 1),
+        ("?q=INSURANCE", 1, 1),
+        ("?title=OTHER", 1, 1),
+        ("", 5, 2),
+        ("?min_income=800", 4, 1),
+        ("?min_income=800&max_income=1200", 2, 1),
+        ("?p=2&category=housing", 1, 2),
+        ("?p=2&category=food", 1, 2),
+    ],
+)
 def test_budget_qs_is_filtered_and_paginated(filter_value, number_of_records, number_of_pages):
     owner = OwnerFactory()
 
@@ -109,7 +111,7 @@ def test_budget_qs_is_filtered_and_paginated(filter_value, number_of_records, nu
 
     url = f"{reverse('budgets-list')}{filter_value}"
     client = APIClient()
-    client.credentials(HTTP_AUTHORIZATION='Bearer ' + get_tokens_for_user(owner))
+    client.credentials(HTTP_AUTHORIZATION="Bearer " + get_tokens_for_user(owner))
 
     response = client.get(url)
     queryset = response.data
@@ -119,17 +121,20 @@ def test_budget_qs_is_filtered_and_paginated(filter_value, number_of_records, nu
 
 
 @pytest.mark.django_db
-@pytest.mark.parametrize("filter_value, number_of_records, number_of_pages", [
-    ("?p=1", 5, 3),
-    ("?p=2", 5, 3),
-    ("?p=3", 3, 3),
-    ("?category=food", 2, 1),
-    ("?q=life", 2, 1),
-    ("?q=transport", 3, 1),
-    ("?category=food&title=fruits", 1, 1),
-    ("?p=1&min_amount=1000", 2, 1),
-    ("?min_amount=90&max_amount=160", 5, 1),
-])
+@pytest.mark.parametrize(
+    "filter_value, number_of_records, number_of_pages",
+    [
+        ("?p=1", 5, 3),
+        ("?p=2", 5, 3),
+        ("?p=3", 3, 3),
+        ("?category=food", 2, 1),
+        ("?q=life", 2, 1),
+        ("?q=transport", 3, 1),
+        ("?category=food&title=fruits", 1, 1),
+        ("?p=1&min_amount=1000", 2, 1),
+        ("?min_amount=90&max_amount=160", 5, 1),
+    ],
+)
 def test_expense_qs_is_filtered_and_paginated(filter_value, number_of_records, number_of_pages):
     owner = OwnerFactory()
 
@@ -160,7 +165,7 @@ def test_expense_qs_is_filtered_and_paginated(filter_value, number_of_records, n
 
     url = f"{reverse('expenses-list')}{filter_value}"
     client = APIClient()
-    client.credentials(HTTP_AUTHORIZATION='Bearer ' + get_tokens_for_user(owner))
+    client.credentials(HTTP_AUTHORIZATION="Bearer " + get_tokens_for_user(owner))
 
     response = client.get(url)
 

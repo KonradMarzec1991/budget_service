@@ -23,8 +23,8 @@ class ExpenseFilter(BaseFilter):
     created_after = filters.DateFilter(field_name="date_created", lookup_expr="gt")
     created_before = filters.DateFilter(field_name="date_created", lookup_expr="lt")
 
-    min_amount = filters.NumberFilter(field_name="amount", lookup_expr='gte')
-    max_amount = filters.NumberFilter(field_name="amount", lookup_expr='lte')
+    min_amount = filters.NumberFilter(field_name="amount", lookup_expr="gte")
+    max_amount = filters.NumberFilter(field_name="amount", lookup_expr="lte")
 
     class Meta:
         model = Expense
@@ -42,11 +42,11 @@ class ExpenseFilter(BaseFilter):
 
 
 class BudgetFilter(BaseFilter):
-    min_income = filters.NumberFilter(field_name="income", lookup_expr='gte')
-    max_income = filters.NumberFilter(field_name="income", lookup_expr='lte')
+    min_income = filters.NumberFilter(field_name="income", lookup_expr="gte")
+    max_income = filters.NumberFilter(field_name="income", lookup_expr="lte")
 
-    min_balance = filters.NumberFilter(field_name="balance", lookup_expr='gte')
-    max_balance = filters.NumberFilter(field_name="balance", lookup_expr='lte')
+    min_balance = filters.NumberFilter(field_name="balance", lookup_expr="gte")
+    max_balance = filters.NumberFilter(field_name="balance", lookup_expr="lte")
 
     q = filters.CharFilter(method="filter_q")
 
@@ -57,8 +57,8 @@ class BudgetFilter(BaseFilter):
     def filter_q(self, queryset, name, value):
         if value:
             queryset = queryset.filter(
-                Q(title__icontains=value) |
-                Q(expenses__title__icontains=value) |
-                Q(expenses__category__icontains=value)
+                Q(title__icontains=value)
+                | Q(expenses__title__icontains=value)
+                | Q(expenses__category__icontains=value)
             )
         return queryset

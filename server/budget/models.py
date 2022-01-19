@@ -3,7 +3,7 @@ from decimal import Decimal
 from django.conf import settings
 from django.db import models
 from django.db.models import Sum
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.utils.translation import gettext_lazy as _
 
@@ -39,16 +39,21 @@ class Budget(DatedModel):
             self.balance = self.income
         self.save(update_fields=["balance"])
 
-    def save(self, *args, **kwargs):
-        instance = Budget.objects.filter(id=getattr(self,"id",None)).first()
-        if instance:
-            if instance.income != self.income:
-                super().save(*args, **kwargs)
-                self.calculate_balance()
-        super().save(*args, **kwargs)
+    def aggregate_by_expense_category(self):
+        agg_expenses = (
+            Budget.objects.filter(id=self.id)
+            .values("expenses__category")
+            .annotate(total=Sum("expenses__amount"))
+        )
+        category_stats = []
+        for exp in agg_expenses:
+            category_stats.append(
+                {"category": exp["expenses__category"], "total": str(exp["total"])}
+            )
+        return category_stats
 
     class Meta:
-        ordering = ("-date_created", )
+        ordering = ("-date_created",)
 
 
 class Expense(DatedModel):
@@ -71,33 +76,10 @@ class Expense(DatedModel):
     def __str__(self):
         return f"{self.title} ({self.category})"
 
-    def save(self, *args, **kwargs):
-        instance = Expense.objects.filter(id=getattr(self,"id",None)).first()
-        if instance:
-            if instance.amount != self.amount:
-                super().save(*args, **kwargs)
-                self.budget.calculate_balance()
-        super().save(*args, **kwargs)
-
-
     class Meta:
-        ordering = ("-amount", )
-
-
-@receiver(post_save, sender=Budget, dispatch_uid="budget_item_post_save_signal")
-def set_balance(sender, instance, created, *args, **kwargs):
-    if created:
-        instance.balance = instance.income
-        instance.save(update_fields=["balance"])
-
-
-@receiver(post_save, sender=Expense, dispatch_uid="expense_item_post_save_signal")
-def re_calculate_budget_balance(sender, instance, created, *args, **kwargs):
-    if created:
-        instance.budget.balance -= instance.amount
-        instance.budget.save(update_fields=["balance"])
+        ordering = ("-amount",)
 
 
 @receiver(post_delete, sender=Expense, dispatch_uid="expense_item_post_delete_signal")
-def re_calculate_budget_balance2(sender, instance, *args, **kwargs):  # TODO change name
+def re_calculate_budget_balance(sender, instance, *args, **kwargs):
     instance.budget.calculate_balance()
