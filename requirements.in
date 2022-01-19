@@ -9,6 +9,8 @@ djangorestframework-simplejwt==5.0.0
 factory-boy==3.2.1
 Faker==11.3.0
 filelock==3.4.2
+gevent~=21.12.0
+gunicorn~=19.9.0
 identify==2.4.4
 iniconfig==1.1.1
 nodeenv==1.6.0
