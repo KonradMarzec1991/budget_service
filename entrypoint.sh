@@ -1,9 +1,7 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-python ./server/manage.py migrate
-python ./server/manage.py load_fixtures
-cd $PWD/server
-echo "****"
-echo $(ls)
-echo "****"
-gunicorn /code/server/server.wsgi:application --bind 0.0.0.0:8000 --config /code/server/config/gunnicorn.py
+python manage.py migrate --no-input
+python manage.py load_fixtures
+python manage.py collectstatic --no-input
+
+gunicorn server.wsgi:application --bind 0.0.0.0:8000

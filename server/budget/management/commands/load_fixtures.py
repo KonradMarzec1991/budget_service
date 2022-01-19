@@ -59,8 +59,8 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
 
         # manual
-        # path = f"{os.getcwd()}/fixtures/"
-        path = f"{os.getcwd()}/server/fixtures/"
+        path = f"{os.getcwd()}/fixtures/"
+        # path = f"{os.getcwd()}/server/fixtures/"
 
         try:
             if get_user_model().objects.exists():

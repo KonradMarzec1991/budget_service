@@ -1,13 +1,14 @@
 FROM python:3.8
 
-COPY ./requirements.txt /code/
-COPY entrypoint.sh /code/
+RUN pip install --upgrade pip
 
+COPY ./requirements.txt .
 RUN apt-get update
-RUN pip install -r /code/requirements.txt
+RUN pip install -r requirements.txt
 
-COPY ./ /code/
-WORKDIR /code
+COPY ./server /app
 
-RUN chmod a+x /code/entrypoint.sh
-CMD /code/entrypoint.sh
+WORKDIR /app
+
+COPY ./entrypoint.sh /
+ENTRYPOINT ["sh", "/entrypoint.sh"]
