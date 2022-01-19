@@ -10,5 +10,5 @@ COPY ./server /app
 
 WORKDIR /app
 
-COPY ./entrypoint.sh /
-ENTRYPOINT ["sh", "/entrypoint.sh"]
+COPY ./entrypoint_local.sh /
+ENTRYPOINT ["sh", "/entrypoint_local.sh"]

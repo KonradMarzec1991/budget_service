@@ -16,7 +16,7 @@ docker-build:
 	docker build ./
 
 docker-test: docker-build
-	docker-compose run --rm server sh -c "pip install -q -r requirements.txt ; cd /code/server/; py.test --maxfail=1 -vv"
+	docker-compose run --rm server sh -c "pip install -q -r requirements.txt; py.test --maxfail=1 -vv"
 
 docker-stop::
 	docker-compose down
