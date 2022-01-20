@@ -20,12 +20,20 @@ class ExpenseSerializer(serializers.ModelSerializer):
         owner = self.context["request"].user
         expense = Expense.objects.create(owner=owner, **validated_data)
         expense.budget.calculate_balance()
+
+        if expense.budget.balance < 0:
+            raise serializers.ValidationError("Income cannot be lower than 0!")
+
         return expense
 
     @transaction.atomic
     def update(self, instance, validated_data):
         updated_instance = super().update(instance, validated_data)
         updated_instance.budget.calculate_balance()
+
+        if updated_instance.budget.balance < 0:
+            raise serializers.ValidationError("Income cannot be lower than 0!")
+
         return updated_instance
 
 
