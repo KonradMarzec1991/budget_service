@@ -23,7 +23,9 @@ class BudgetViewSet(ModelViewSet):
 
         allowed_budgets = list(owner.users.all().values_list("id", flat=True))
         return (
-            Budget.objects.filter(Q(owner=owner.id) | Q(pk__in=allowed_budgets))
+            Budget.objects.filter(
+                Q(owner=owner.id) | Q(pk__in=allowed_budgets)
+            )
             .prefetch_related("expenses")
             .all()
         )

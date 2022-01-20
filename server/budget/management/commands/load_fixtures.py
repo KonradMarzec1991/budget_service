@@ -27,7 +27,10 @@ def load_budgets(file_path):
             username = fields.pop("owner")
 
             instances.append(
-                Budget(**fields, owner=get_user_model().objects.get(username=username))
+                Budget(
+                    **fields,
+                    owner=get_user_model().objects.get(username=username),
+                )
             )
         Budget.objects.bulk_create(instances)
 
@@ -75,8 +78,12 @@ class Command(BaseCommand):
             for budget in budgets:
                 budget.calculate_balance()
 
-            self.stdout.write(self.style.SUCCESS("Fixture uploading completed."))
+            self.stdout.write(
+                self.style.SUCCESS("Fixture uploading completed.")
+            )
         except IOError:
             self.stdout.write(
-                self.style.WARNING(f"Unable to read file {path} or file contains wrong data.")
+                self.style.WARNING(
+                    f"Unable to read file {path} or file contains wrong data."
+                )
             )

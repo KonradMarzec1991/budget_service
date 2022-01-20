@@ -23,7 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv(
-    "SECRET_KEY", "django-insecure-2hmx8^$%)wi17k2**o22enf=8*snp^bqlku87#u$4*tc2l@761"
+    "SECRET_KEY",
+    "django-insecure-2hmx8^$%)wi17k2**o22enf=8*snp^bqlku87#u$4*tc2l@761",
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -93,7 +94,9 @@ DATABASES = {
 
 
 REST_FRAMEWORK = {
-    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend"
+    ],
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication"
     ],

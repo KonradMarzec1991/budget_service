@@ -24,4 +24,7 @@ def test_categories_are_aggregated():
     ExpenseFactory(budget=budget, category="Food", amount=100)
 
     agg = budget.aggregate_by_expense_category()
-    assert agg == [{"category": "Food", "total": "100"}, {"category": "Housing", "total": "80"}]
+    assert agg == [
+        {"category": "Food", "total": "100"},
+        {"category": "Housing", "total": "80"},
+    ]

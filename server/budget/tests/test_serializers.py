@@ -10,7 +10,9 @@ from budget.tests.factories import OwnerFactory
 @pytest.mark.django_db
 def test_serializer_set_balance_when_budget_is_created(budget_input):
     owner = OwnerFactory(is_superuser=False)
-    serializer = BudgetSerializer(context={"request": Mock(user=owner)}, data=budget_input)
+    serializer = BudgetSerializer(
+        context={"request": Mock(user=owner)}, data=budget_input
+    )
 
     assert serializer.is_valid()
 
@@ -20,14 +22,19 @@ def test_serializer_set_balance_when_budget_is_created(budget_input):
 
 
 @pytest.mark.django_db
-def test_serializer_update_balance_when_expense_is_created_or_updated(budget_input, expense_input):
+def test_serializer_update_balance_when_expense_is_created_or_updated(
+    budget_input, expense_input
+):
     owner = OwnerFactory(is_superuser=False)
-    serializer = BudgetSerializer(context={"request": Mock(user=owner)}, data=budget_input)
+    serializer = BudgetSerializer(
+        context={"request": Mock(user=owner)}, data=budget_input
+    )
     assert serializer.is_valid()
 
     budget = serializer.save()
     serializer = ExpenseSerializer(
-        context={"request": Mock(user=owner)}, data={**expense_input, "budget": budget.id}
+        context={"request": Mock(user=owner)},
+        data={**expense_input, "budget": budget.id},
     )
     assert serializer.is_valid()
 
@@ -38,14 +45,19 @@ def test_serializer_update_balance_when_expense_is_created_or_updated(budget_inp
 
 
 @pytest.mark.django_db
-def test_serializer_update_balance_when_expense_is_deleted(budget_input, expense_input):
+def test_serializer_update_balance_when_expense_is_deleted(
+    budget_input, expense_input
+):
     owner = OwnerFactory(id=5, is_superuser=False)
-    serializer = BudgetSerializer(context={"request": Mock(user=owner)}, data=budget_input)
+    serializer = BudgetSerializer(
+        context={"request": Mock(user=owner)}, data=budget_input
+    )
     assert serializer.is_valid()
 
     budget = serializer.save()
     serializer = ExpenseSerializer(
-        context={"request": Mock(user=owner)}, data={**expense_input, "budget": budget.id}
+        context={"request": Mock(user=owner)},
+        data={**expense_input, "budget": budget.id},
     )
     assert serializer.is_valid()
 

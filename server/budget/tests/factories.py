@@ -26,7 +26,14 @@ class BudgetFactory(django.DjangoModelFactory):
 class ExpenseFactory(django.DjangoModelFactory):
     title = declarations.Sequence(lambda n: "expense-{}".format(n))
     category = choice(
-        ["HOUSING", "FOOD", "TRANSPORTATION", "INVESTING", "HEALTHCARE", "INSURANCE"]
+        [
+            "HOUSING",
+            "FOOD",
+            "TRANSPORTATION",
+            "INVESTING",
+            "HEALTHCARE",
+            "INSURANCE",
+        ]
     )
     amount = fuzzy.FuzzyDecimal(20, 300, 2)
     budget = declarations.SubFactory(BudgetFactory)

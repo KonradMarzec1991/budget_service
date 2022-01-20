@@ -19,24 +19,39 @@ def test_qs_is_filtered_with_request_user():
     owner_2 = OwnerFactory(is_superuser=False)
 
     budget_1 = BudgetFactory(title="GENERAL", income=1000, owner=owner_1)
-    ExpenseFactory(budget=budget_1, title="plant", category="HOUSING", amount=120)
-    ExpenseFactory(budget=budget_1, title="take-away", category="FOOD", amount=50)
+    ExpenseFactory(
+        budget=budget_1, title="plant", category="HOUSING", amount=120
+    )
+    ExpenseFactory(
+        budget=budget_1, title="take-away", category="FOOD", amount=50
+    )
 
     budget_2 = BudgetFactory(title="OTHER", income=2000, owner=owner_2)
-    ExpenseFactory(budget=budget_2, title="flower", category="HOUSING", amount=150)
+    ExpenseFactory(
+        budget=budget_2, title="flower", category="HOUSING", amount=150
+    )
 
     budget_3 = BudgetFactory(title="HOLIDAY", income=2000, owner=owner_2)
-    ExpenseFactory(budget=budget_3, title="insurance_card", category="INSURANCE", amount=220)
+    ExpenseFactory(
+        budget=budget_3,
+        title="insurance_card",
+        category="INSURANCE",
+        amount=220,
+    )
 
     client = APIClient()
-    client.credentials(HTTP_AUTHORIZATION="Bearer " + get_tokens_for_user(owner_1))
+    client.credentials(
+        HTTP_AUTHORIZATION="Bearer " + get_tokens_for_user(owner_1)
+    )
 
     response = client.get(reverse("budgets-list"))
 
     assert response.status_code == HTTPStatus.OK
     assert response.data["num_of_records"] == 1
 
-    client.credentials(HTTP_AUTHORIZATION="Bearer " + get_tokens_for_user(owner_2))
+    client.credentials(
+        HTTP_AUTHORIZATION="Bearer " + get_tokens_for_user(owner_2)
+    )
     response = client.get(reverse("budgets-list"))
 
     assert response.status_code == HTTPStatus.OK
@@ -50,16 +65,27 @@ def test_admin_read_all_budgets():
     owner_3 = OwnerFactory(is_superuser=True)
 
     budget_1 = BudgetFactory(title="GENERAL", income=1000, owner=owner_1)
-    ExpenseFactory(budget=budget_1, title="plant", category="HOUSING", amount=120)
+    ExpenseFactory(
+        budget=budget_1, title="plant", category="HOUSING", amount=120
+    )
 
     budget_2 = BudgetFactory(title="SPECIFIC", income=2000, owner=owner_2)
-    ExpenseFactory(budget=budget_2, title="flower", category="HOUSING", amount=150)
+    ExpenseFactory(
+        budget=budget_2, title="flower", category="HOUSING", amount=150
+    )
 
     budget_3 = BudgetFactory(title="OTHER", income=2000, owner=owner_3)
-    ExpenseFactory(budget=budget_3, title="insurance_card", category="INSURANCE", amount=220)
+    ExpenseFactory(
+        budget=budget_3,
+        title="insurance_card",
+        category="INSURANCE",
+        amount=220,
+    )
 
     client = APIClient()
-    client.credentials(HTTP_AUTHORIZATION="Bearer " + get_tokens_for_user(owner_3))
+    client.credentials(
+        HTTP_AUTHORIZATION="Bearer " + get_tokens_for_user(owner_3)
+    )
 
     response = client.get(reverse("budgets-list"))
 
@@ -81,37 +107,71 @@ def test_admin_read_all_budgets():
         ("?p=2&category=food", 1, 2),
     ],
 )
-def test_budget_qs_is_filtered_and_paginated(filter_value, number_of_records, number_of_pages):
+def test_budget_qs_is_filtered_and_paginated(
+    filter_value, number_of_records, number_of_pages
+):
     owner = OwnerFactory()
 
     budget_1 = BudgetFactory(title="GENERAL", income=1000, owner=owner)
-    ExpenseFactory(budget=budget_1, title="plant", category="HOUSING", amount=120)
-    ExpenseFactory(budget=budget_1, title="take-away", category="FOOD", amount=50)
-    ExpenseFactory(budget=budget_1, title="bus", category="TRANSPORTATION", amount=90)
-    ExpenseFactory(budget=budget_1, title="cinema", category="ENTERTAINMENT", amount=60)
+    ExpenseFactory(
+        budget=budget_1, title="plant", category="HOUSING", amount=120
+    )
+    ExpenseFactory(
+        budget=budget_1, title="take-away", category="FOOD", amount=50
+    )
+    ExpenseFactory(
+        budget=budget_1, title="bus", category="TRANSPORTATION", amount=90
+    )
+    ExpenseFactory(
+        budget=budget_1, title="cinema", category="ENTERTAINMENT", amount=60
+    )
 
     budget_2 = BudgetFactory(title="OTHER", income=2000, owner=owner)
-    ExpenseFactory(budget=budget_2, title="flower", category="HOUSING", amount=120)
+    ExpenseFactory(
+        budget=budget_2, title="flower", category="HOUSING", amount=120
+    )
     ExpenseFactory(budget=budget_2, title="fruits", category="FOOD", amount=20)
-    ExpenseFactory(budget=budget_2, title="car", category="TRANSPORTATION", amount=300)
-    ExpenseFactory(budget=budget_2, title="theater", category="ENTERTAINMENT", amount=150)
-    ExpenseFactory(budget=budget_2, title="life_insurance", category="INSURANCE", amount=400)
+    ExpenseFactory(
+        budget=budget_2, title="car", category="TRANSPORTATION", amount=300
+    )
+    ExpenseFactory(
+        budget=budget_2, title="theater", category="ENTERTAINMENT", amount=150
+    )
+    ExpenseFactory(
+        budget=budget_2,
+        title="life_insurance",
+        category="INSURANCE",
+        amount=400,
+    )
 
     budget_3 = BudgetFactory(title="SPECIFIC", income=500, owner=owner)
-    ExpenseFactory(budget=budget_3, title="table", category="HOUSING", amount=400)
+    ExpenseFactory(
+        budget=budget_3, title="table", category="HOUSING", amount=400
+    )
 
     budget_4 = BudgetFactory(title="HOLIDAY", income=5000, owner=owner)
-    ExpenseFactory(budget=budget_4, title="travel", category="ENTERTAINMENT", amount=4000)
+    ExpenseFactory(
+        budget=budget_4, title="travel", category="ENTERTAINMENT", amount=4000
+    )
 
     budget_5 = BudgetFactory(title="BONUS", income=200, owner=owner)
-    ExpenseFactory(budget=budget_5, title="petrol", category="TRANSPORTATION", amount=100)
+    ExpenseFactory(
+        budget=budget_5, title="petrol", category="TRANSPORTATION", amount=100
+    )
 
     budget_6 = BudgetFactory(title="CAMPAIGN", income=1200, owner=owner)
-    ExpenseFactory(budget=budget_6, title="life_campaign", category="HEALTHCARE", amount=1000)
+    ExpenseFactory(
+        budget=budget_6,
+        title="life_campaign",
+        category="HEALTHCARE",
+        amount=1000,
+    )
 
     url = f"{reverse('budgets-list')}{filter_value}"
     client = APIClient()
-    client.credentials(HTTP_AUTHORIZATION="Bearer " + get_tokens_for_user(owner))
+    client.credentials(
+        HTTP_AUTHORIZATION="Bearer " + get_tokens_for_user(owner)
+    )
 
     response = client.get(url)
     queryset = response.data
@@ -135,37 +195,71 @@ def test_budget_qs_is_filtered_and_paginated(filter_value, number_of_records, nu
         ("?min_amount=90&max_amount=160", 5, 1),
     ],
 )
-def test_expense_qs_is_filtered_and_paginated(filter_value, number_of_records, number_of_pages):
+def test_expense_qs_is_filtered_and_paginated(
+    filter_value, number_of_records, number_of_pages
+):
     owner = OwnerFactory()
 
     budget_1 = BudgetFactory(title="GENERAL", income=1000, owner=owner)
-    ExpenseFactory(budget=budget_1, title="plant", category="HOUSING", amount=120)
-    ExpenseFactory(budget=budget_1, title="take-away", category="FOOD", amount=50)
-    ExpenseFactory(budget=budget_1, title="bus", category="TRANSPORTATION", amount=90)
-    ExpenseFactory(budget=budget_1, title="cinema", category="ENTERTAINMENT", amount=60)
+    ExpenseFactory(
+        budget=budget_1, title="plant", category="HOUSING", amount=120
+    )
+    ExpenseFactory(
+        budget=budget_1, title="take-away", category="FOOD", amount=50
+    )
+    ExpenseFactory(
+        budget=budget_1, title="bus", category="TRANSPORTATION", amount=90
+    )
+    ExpenseFactory(
+        budget=budget_1, title="cinema", category="ENTERTAINMENT", amount=60
+    )
 
     budget_2 = BudgetFactory(title="OTHER", income=2000, owner=owner)
-    ExpenseFactory(budget=budget_2, title="flower", category="HOUSING", amount=120)
+    ExpenseFactory(
+        budget=budget_2, title="flower", category="HOUSING", amount=120
+    )
     ExpenseFactory(budget=budget_2, title="fruits", category="FOOD", amount=20)
-    ExpenseFactory(budget=budget_2, title="car", category="TRANSPORTATION", amount=300)
-    ExpenseFactory(budget=budget_2, title="theater", category="ENTERTAINMENT", amount=150)
-    ExpenseFactory(budget=budget_2, title="life_insurance", category="INSURANCE", amount=400)
+    ExpenseFactory(
+        budget=budget_2, title="car", category="TRANSPORTATION", amount=300
+    )
+    ExpenseFactory(
+        budget=budget_2, title="theater", category="ENTERTAINMENT", amount=150
+    )
+    ExpenseFactory(
+        budget=budget_2,
+        title="life_insurance",
+        category="INSURANCE",
+        amount=400,
+    )
 
     budget_3 = BudgetFactory(title="SPECIFIC", income=500, owner=owner)
-    ExpenseFactory(budget=budget_3, title="table", category="HOUSING", amount=400)
+    ExpenseFactory(
+        budget=budget_3, title="table", category="HOUSING", amount=400
+    )
 
     budget_4 = BudgetFactory(title="HOLIDAY", income=5000, owner=owner)
-    ExpenseFactory(budget=budget_4, title="travel", category="ENTERTAINMENT", amount=4000)
+    ExpenseFactory(
+        budget=budget_4, title="travel", category="ENTERTAINMENT", amount=4000
+    )
 
     budget_5 = BudgetFactory(title="BONUS", income=200, owner=owner)
-    ExpenseFactory(budget=budget_5, title="petrol", category="TRANSPORTATION", amount=100)
+    ExpenseFactory(
+        budget=budget_5, title="petrol", category="TRANSPORTATION", amount=100
+    )
 
     budget_6 = BudgetFactory(title="CAMPAIGN", income=1200, owner=owner)
-    ExpenseFactory(budget=budget_6, title="life_campaign", category="HEALTHCARE", amount=1000)
+    ExpenseFactory(
+        budget=budget_6,
+        title="life_campaign",
+        category="HEALTHCARE",
+        amount=1000,
+    )
 
     url = f"{reverse('expenses-list')}{filter_value}"
     client = APIClient()
-    client.credentials(HTTP_AUTHORIZATION="Bearer " + get_tokens_for_user(owner))
+    client.credentials(
+        HTTP_AUTHORIZATION="Bearer " + get_tokens_for_user(owner)
+    )
 
     response = client.get(url)
 

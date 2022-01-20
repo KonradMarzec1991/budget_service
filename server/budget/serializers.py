@@ -58,9 +58,9 @@ class BudgetSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation["date_created"] = isoparse(representation["date_created"]).strftime(
-            "%Y-%M-%d %H:%m:%S"
-        )
+        representation["date_created"] = isoparse(
+            representation["date_created"]
+        ).strftime("%Y-%M-%d %H:%m:%S")
         return representation
 
     def get_stats(self, obj):

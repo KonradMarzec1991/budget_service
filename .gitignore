@@ -33,4 +33,6 @@ venv.bak/
 .idea/
 .idea
 
+.DS_Store
+
 db.sqlite3

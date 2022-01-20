@@ -14,6 +14,14 @@ api_router.register(r"expenses", ExpensesViewSet, basename="expenses")
 urlpatterns = [
     path("admin/", admin.site.urls),
     path(r"", include(api_router.urls)),
-    path("api/token/", jwt_views.TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("api/token/refresh/", jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
+    path(
+        "api/token/",
+        jwt_views.TokenObtainPairView.as_view(),
+        name="token_obtain_pair",
+    ),
+    path(
+        "api/token/refresh/",
+        jwt_views.TokenRefreshView.as_view(),
+        name="token_refresh",
+    ),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
