@@ -30,7 +30,7 @@ class Budget(DatedModel):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE
     )
     users = models.ManyToManyField(
-        to=settings.AUTH_USER_MODEL, related_name="users", blank=True
+        to=settings.AUTH_USER_MODEL, related_name="budgets", blank=True
     )
 
     def __str__(self):

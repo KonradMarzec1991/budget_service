@@ -21,7 +21,7 @@ class BudgetViewSet(ModelViewSet):
         if owner.is_superuser:
             return Budget.objects.prefetch_related("expenses").all()
 
-        shared_budgets = list(owner.users.all().values_list("id", flat=True))
+        shared_budgets = list(owner.budgets.all().values_list("id", flat=True))
         return (
             Budget.objects.filter(Q(owner=owner.id) | Q(pk__in=shared_budgets))
             .prefetch_related("expenses")
