@@ -22,7 +22,9 @@ class ExpenseSerializer(serializers.ModelSerializer):
         expense.budget.calculate_balance()
 
         if expense.budget.balance < 0:
-            raise serializers.ValidationError("Income cannot be lower than 0!")
+            raise serializers.ValidationError(
+                "Balance cannot be lower than 0!"
+            )
 
         return expense
 
@@ -32,7 +34,9 @@ class ExpenseSerializer(serializers.ModelSerializer):
         updated_instance.budget.calculate_balance()
 
         if updated_instance.budget.balance < 0:
-            raise serializers.ValidationError("Income cannot be lower than 0!")
+            raise serializers.ValidationError(
+                "Balance cannot be lower than 0!"
+            )
 
         return updated_instance
 
